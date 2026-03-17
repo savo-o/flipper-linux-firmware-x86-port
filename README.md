@@ -48,6 +48,12 @@ qemu-system-aarch64 \
 
 This is a minimal configuration that allows the system to boot.
 
+## FOR RUN KDE PLASMA
+
+```bash
+Xorg :0 -retro -verbose 3 & sleep 3; DISPLAY=:0 dbus-run-session startplasma-x11
+```
+
 ## Building the kernel yourself
 
 Clone the kernel repository:
@@ -103,15 +109,17 @@ qemu-system-aarch64 \
 -display gtk
 ```
 
+## FOR RUN KDE PLASMA
+
+```bash
+Xorg :0 -retro -verbose 3 & sleep 3; DISPLAY=:0 dbus-run-session startplasma-x11
+```
 ![Screenshot](run.jpg)
+![Screenshot](KDE.jpg)
 
 ## Current state
 
-At the moment this does not have much practical use. It is mostly an experiment to see whether the system can run on a PC.
-
-Maybe it will become more interesting once the interface and more parts of the system are released.
-
-For now it is just a small experiment.
+OS can run KDE Plasma.
 
 ## Disclaimer
 
