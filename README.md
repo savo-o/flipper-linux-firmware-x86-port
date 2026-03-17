@@ -1,5 +1,9 @@
 # Flipper Linux Firmware x86 Port
 
+!!!! It's not the full system, just the rootfs and kernel running in QEMU.
+
+Maybe it would be possible to emulate or fake some devices to see how the system initializes the hardware.
+
 This is a small experiment where I try to run the Flipper One Linux kernel on a regular x86 PC using QEMU.
 
 Recently the Flipper Devices team published the Linux kernel sources for their upcoming device. Flipper One is expected to be a portable mini computer based on an ARM processor.
