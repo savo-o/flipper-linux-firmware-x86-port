@@ -120,7 +120,7 @@ qemu-system-aarch64 \
 Xorg :0 -retro -verbose 3 & sleep 3; DISPLAY=:0 dbus-run-session startplasma-x11
 ```
 ![Screenshot](run.jpg)
-![Screenshot](KDE.jpg)
+![Screenshot](kde.jpg)
 
 ## Current state
 
