@@ -1,34 +1,35 @@
-## Запуск Linux из Flipper One в QEMU
+## Running Flipper One Linux in QEMU
 
-Недавно команда Flipper Devices поделилась с сообществом исходниками ядра для будущего девайса.
-Flipper One - портативный мини-компьютер на базе ARM процессора. И ради интереса, я захотел попробовать запустить образ системы на обычном x86 ПК.
+Recently, the Flipper Devices team shared the kernel source code for their upcoming device with the community.
+Flipper One is a portable mini-computer based on an ARM processor. Out of curiosity, I decided to try running the system image on a regular x86 PC.
 
-## Для начала нам понадобится:
+## What you will need
 
-1. Linux. Я использовал Kali, но в теории можно любой дистрибутив
+1. Linux. I used Kali, but in theory any distribution should work.
 
 2. QEMU
 
-3. Пару-тройку свободных часов
+3. A few hours of free time
 
-На момент эксперимента нам доступно только ядро и rootfs системы. В принципе, нам этого хватает.
+At the moment of this experiment, we only have access to the kernel and the system rootfs. In practice, that’s enough to try booting the system.
 
-## Запуск:
+## Running the system
 
-Пример буду показывать на Debian-дистрибутивах
+Examples will be shown on Debian-based distributions.
 
-1. Установка зависимостей
+1. Installing dependencies
+
 sudo apt update
 sudo apt install git build-essential bc bison flex libssl-dev \
 libncurses-dev qemu-system-arm qemu-system-aarch64
 
-Далее есть выбор, собрать ядро самому, или скачать мое, которое уже запускает ОС
+Next you have two options: build the kernel yourself, or download the one I compiled that already boots the OS.
 
-## Готовое ядро: 
+## Prebuilt kernel
 
-Скачайте ядро и rootfs в разделе Release
+Download the kernel and rootfs from the Releases section.
 
-Далее в терминале:
+Then run in the terminal:
 
 qemu-system-aarch64 \
 -M virt \
@@ -43,33 +44,36 @@ qemu-system-aarch64 \
 -device usb-kbd \
 -display gtk
 
-Базовый конфиг с которым система хотя бы запустится.
+This is a basic configuration that allows the system to boot.
 
-## Сборка исходников:
+## Building from source
 
-1. Клонирование репозитория
+1. Clone the repository
+
 git clone --depth=1 https://github.com/flipperdevices/flipper-linux-kernel
 cd flipper-linux-kernel
 
-2. Настройки ядра: 
+2. Kernel configuration
+
 make ARCH=arm64 menuconfig
 
-Включаем (если не включено):
-VirtIO
-VirtIO GPU
-Framebuffer console
+Enable (if not already enabled):
 
-3. Сборка ядра:
+- VirtIO
+- VirtIO GPU
+- Framebuffer console
+
+3. Build the kernel
 
 make ARCH=arm64 -j$(nproc)
 
-4. Подготовка rootfs:
+4. Preparing the rootfs
 
-Скачиваем файл с офф. сайта - тык
+Download the file from the official website.
 
 dd if=debian-4096-generic-build-854.img of=rootfs.img bs=1 skip=16777216
 
-5. Запуск:
+5. Running the system
 
 qemu-system-aarch64 \
 -M virt \
@@ -83,4 +87,8 @@ qemu-system-aarch64 \
 -device virtio-mouse-pci \
 -display gtk
 
-Сейчас, на момент написания этой статьи, у Flipper OS на ПК смысла особо нет. Это просто эксперимент, возможно ли это. Возможно, смысл появится когда будет интерфейс и т.д, но пока что всего этого нет. Проект будет развиваться. Следите за обновлениями.
+![screenshot](run.jpeg)
+
+At the time of writing, running Flipper OS on a PC doesn’t have much practical value yet. This is mostly an experiment to see whether it’s possible.
+
+It may become more useful once a proper interface and additional components appear. For now, this is just the beginning. The project will continue to evolve — stay tuned for updates.
