@@ -29,6 +29,11 @@ sudo apt install git build-essential bc bison flex libssl-dev libncurses-dev qem
 
 If you do not want to build the kernel yourself you can download the kernel and rootfs from the Releases section.
 
+Unpack rootfs:
+```bash
+zstd -d rootfs.img.zst
+```
+
 Then run:
 
 ```bash
