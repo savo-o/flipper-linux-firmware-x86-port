@@ -87,7 +87,7 @@ qemu-system-aarch64 \
 -device virtio-mouse-pci \
 -display gtk
 
-![screenshot](run.jpeg)
+![screenshot](run.jpg)
 
 At the time of writing, running Flipper OS on a PC doesn’t have much practical value yet. This is mostly an experiment to see whether it’s possible.
 
