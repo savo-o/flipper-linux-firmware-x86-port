@@ -103,6 +103,8 @@ qemu-system-aarch64 \
 -display gtk
 ```
 
+![Screenshot](run.jpg)
+
 ## Current state
 
 At the moment this does not have much practical use. It is mostly an experiment to see whether the system can run on a PC.
