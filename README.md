@@ -1,5 +1,7 @@
 # Flipper Linux Firmware x86 Port
 
+![Screenshot](images/logo_0.png)
+
 !!!! It's not the full system, just the rootfs and kernel running in QEMU.
 
 Maybe it would be possible to emulate or fake some devices to see how the system initializes the hardware.
