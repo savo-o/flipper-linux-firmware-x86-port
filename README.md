@@ -31,9 +31,10 @@ sudo apt install git build-essential bc bison flex libssl-dev libncurses-dev qem
 
 ## Using a prebuilt kernel
 
-If you do not want to build the kernel yourself you can download the kernel and rootfs from the Releases section.
+Download the kernel, rootfs and device tree from the Releases section.
 
 Unpack rootfs:
+
 ```bash
 zstd -d rootfs.img.zst
 ```
@@ -45,23 +46,19 @@ qemu-system-aarch64 \
 -M virt \
 -cpu cortex-a72 \
 -m 2048 \
+-smp 4 \
 -kernel flipper-linux-kernel/arch/arm64/boot/Image \
+-dtb virt_flipper.dtb \
 -append "root=/dev/vda rw console=tty1" \
 -drive file=rootfs.img,format=raw,if=virtio \
 -device virtio-gpu-pci \
--device virtio-keyboard-pci \
 -device qemu-xhci \
 -device usb-kbd \
+-device usb-tablet \
 -display gtk
 ```
 
 This is a minimal configuration that allows the system to boot.
-
-## FOR RUN KDE PLASMA
-
-```bash
-Xorg :0 -retro -verbose 3 & sleep 3; DISPLAY=:0 dbus-run-session startplasma-x11
-```
 
 ## Building the kernel yourself
 
@@ -86,6 +83,13 @@ Make sure these options are enabled:
 * VirtIO GPU
 * Framebuffer console
 
+
+## Building the device tree
+```bash
+dtc -I dts -O dtb -o virt_flipper.dtb virt.dts
+```
+The custom device tree makes the system identify as Flipper One rev. F0B0C1 with RK3576 CPU while using virtual hardware.
+
 ### Build
 
 ```bash
@@ -109,12 +113,15 @@ qemu-system-aarch64 \
 -M virt \
 -cpu cortex-a72 \
 -m 2048 \
+-smp 4 \
 -kernel flipper-linux-kernel/arch/arm64/boot/Image \
+-dtb virt_flipper.dtb \
 -append "root=/dev/vda rw console=tty1" \
 -drive file=rootfs.img,format=raw,if=virtio \
 -device virtio-gpu-pci \
--device virtio-keyboard-pci \
--device virtio-mouse-pci \
+-device qemu-xhci \
+-device usb-kbd \
+-device usb-tablet \
 -display gtk
 ```
 
@@ -126,22 +133,28 @@ Xorg :0 -retro -verbose 3 & sleep 3; DISPLAY=:0 dbus-run-session startplasma-x11
 ![Screenshot](run.jpg)
 ![Screenshot](kde.jpg)
 
+
 ## What works
 
-Kernel boots
-
-System identifies as Flipper One
-
-Basic display via virtio-gpu
+* Kernel boots
+* System identifies as Flipper One rev. F0B0C1
+* CPU reported as RK3576
+* Display via virtio-gpu
+* Network (Ethernet)
+* KDE Plasma
+* Battery node registered
+* Power regulators registered (vcc8v4_sys, vcc3v3_control, vcc5v0_sys_s5)
+* Sound card node present
 
 ## What doesn't work (yet)
 
-No real hardware (GPIO, SPI, I2C)
-
-Display is emulated
-
-Hardware validation is bypassed
+* Real hardware (GPIO, SPI, I2C)
+* I2C devices (PMIC rk806, GPIO expander, RTC, audio codec)
+* MCU interconnect
+* UFS storage
+* USB hub
 
 ## Disclaimer
 
 This project is not affiliated with Flipper Devices and exists only for experimentation.
+
