@@ -130,8 +130,7 @@ qemu-system-aarch64 \
 ```bash
 Xorg :0 -retro -verbose 3 & sleep 3; DISPLAY=:0 dbus-run-session startplasma-x11
 ```
-![Screenshot](run.jpg)
-![Screenshot](kde.jpg)
+![Screenshot](images/kde.jpg)
 
 
 ## What works
