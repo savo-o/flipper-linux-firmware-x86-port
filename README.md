@@ -90,7 +90,7 @@ dtc -I dts -O dtb -o virt_flipper.dtb virt.dts
 ```
 The custom device tree makes the system identify as Flipper One rev. F0B0C1 with RK3576 CPU while using virtual hardware.
 
-### Build
+## Build kernel
 
 ```bash
 make ARCH=arm64 -j$(nproc)
