@@ -129,13 +129,17 @@ Xorg :0 -retro -verbose 3 & sleep 3; DISPLAY=:0 dbus-run-session startplasma-x11
 ## What works
 
 Kernel boots
+
 System identifies as Flipper One
+
 Basic display via virtio-gpu
 
 ## What doesn't work (yet)
 
 No real hardware (GPIO, SPI, I2C)
+
 Display is emulated
+
 Hardware validation is bypassed
 
 ## Disclaimer
