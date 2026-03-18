@@ -130,8 +130,8 @@ qemu-system-aarch64 \
 ```bash
 Xorg :0 -retro -verbose 3 & sleep 3; DISPLAY=:0 dbus-run-session startplasma-x11
 ```
-![Screenshot](images/kde.jpg)
-
+![Screenshot](images/fastfetch0.jpg)
+fastfetch
 
 ## What works
 
