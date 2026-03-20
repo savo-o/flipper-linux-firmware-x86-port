@@ -57,10 +57,17 @@ qemu-system-aarch64 \
 -device qemu-xhci \
 -device usb-kbd \
 -device usb-tablet \
+-device intel-hda \
+-device hda-duplex \
+-device usb-host,vendorid=0x1a86,productid=0x7523 \
 -display gtk
 ```
 
 This is a minimal configuration that allows the system to boot.
+
+## Hardware Bridge (GPIO/I2C)
+
+For GPIO and I2C support via ESP32, see [Hardware Bridge documentation](docs/gpio_setup.md).
 
 ## Building the kernel yourself
 
