@@ -91,6 +91,7 @@ Make sure these options are enabled:
 * VirtIO
 * VirtIO GPU
 * Framebuffer console
+* (for gpio please turn on ch341 support)
 
 
 ## Building the device tree
