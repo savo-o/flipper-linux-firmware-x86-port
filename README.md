@@ -40,7 +40,7 @@ zstd -d rootfs.img.zst
 Then run:
 
 ```bash
-qemu-system-aarch64 \
+sudo qemu-system-aarch64 \
 -M virt \
 -cpu cortex-a72 \
 -m 2048 \
@@ -55,7 +55,8 @@ qemu-system-aarch64 \
 -device usb-tablet \
 -device intel-hda \
 -device hda-duplex \
--device usb-host,vendorid=0x1a86,productid=0x7523 \
+-usb \
+(add this line for gpio) -device usb-host,hostbus=2,hostaddr=3 \
 -display gtk
 ```
 
