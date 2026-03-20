@@ -65,6 +65,8 @@ Tested on ESP32 WROOM DevModule.
 
 ## Loading the driver
 
+Driver already exists in a rootfs (/root)
+
 Inside the Flipper One VM:
 
 ```bash
