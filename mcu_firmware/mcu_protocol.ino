@@ -1,7 +1,6 @@
 #include <Wire.h>
 #include <SPI.h>
 
-// Protocol constants
 #define SYNC_BYTE    0xAA
 #define CMD_I2C_READ     0x01
 #define CMD_I2C_WRITE    0x02
@@ -22,7 +21,6 @@
 #define MAX_DATA_LEN 255
 #define UART_TIMEOUT_MS 100
 
-// CRC8 lookup table (Dallas/Maxim)
 static const uint8_t crc8_table[256] = {
   0x00, 0x5e, 0xbc, 0xe2, 0x61, 0x3f, 0xdd, 0x83,
   0xc2, 0x9c, 0x7e, 0x20, 0xa3, 0xfd, 0x1f, 0x41,
@@ -66,11 +64,9 @@ uint8_t crc8(const uint8_t *data, size_t len) {
   return crc;
 }
 
-// Packet buffer
 uint8_t rx_buf[MAX_DATA_LEN + 4];
 uint8_t tx_buf[MAX_DATA_LEN + 4];
 
-// Read exactly n bytes with timeout
 bool read_bytes(uint8_t *buf, size_t n) {
   size_t received = 0;
   unsigned long start = millis();
@@ -83,7 +79,6 @@ bool read_bytes(uint8_t *buf, size_t n) {
   return true;
 }
 
-// Send response
 void send_response(uint8_t status, const uint8_t *data, uint8_t len) {
   tx_buf[0] = SYNC_BYTE;
   tx_buf[1] = status;
@@ -175,28 +170,23 @@ void setup() {
 }
 
 void loop() {
-  // Wait for SYNC byte
   if (!Serial.available()) return;
   uint8_t sync = Serial.read();
   if (sync != SYNC_BYTE) return;
 
-  // Read CMD and LEN
   uint8_t header[2];
   if (!read_bytes(header, 2)) { send_error(ERR_TIMEOUT); return; }
   uint8_t cmd = header[0];
   uint8_t len = header[1];
 
-  // Read DATA
   uint8_t data[MAX_DATA_LEN];
   if (len > 0) {
     if (!read_bytes(data, len)) { send_error(ERR_TIMEOUT); return; }
   }
 
-  // Read CRC
   uint8_t received_crc;
   if (!read_bytes(&received_crc, 1)) { send_error(ERR_TIMEOUT); return; }
 
-  // Verify CRC
   rx_buf[0] = SYNC_BYTE;
   rx_buf[1] = cmd;
   rx_buf[2] = len;
@@ -204,7 +194,6 @@ void loop() {
   uint8_t expected_crc = crc8(rx_buf, 3 + len);
   if (received_crc != expected_crc) { send_error(ERR_BAD_CRC); return; }
 
-  // Handle command
   switch (cmd) {
     case CMD_I2C_READ:     handle_i2c_read(data, len);     break;
     case CMD_I2C_WRITE:    handle_i2c_write(data, len);    break;
