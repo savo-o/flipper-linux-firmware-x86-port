@@ -154,8 +154,8 @@ fastfetch
 
 ## What doesn't work (yet)
 
-* Real hardware (GPIO, SPI, I2C)
-* I2C devices (PMIC rk806, GPIO expander, RTC, audio codec)
+* Real hardware (SPI, I2C)
+* I2C devices (PMIC rk806, RTC, audio codec)
 * MCU interconnect
 * UFS storage
 * USB hub
